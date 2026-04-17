@@ -15,11 +15,11 @@ public class EntityParser {
         );
     }
 
-    public static Message parseMessage(JsonNode data) {
+    public static Message parseMessage(JsonNode data, com.fluxer.java.FluxerClient client) {
         return new Message(
             data.get("id").asText(),
             data.get("content").asText(),
-            data.get("channel_id").asText(),
+            new com.fluxer.java.entities.TextChannel(data.get("channel_id").asText(), "channel", client),
             parseUser(data.get("author"))
         );
     }

@@ -8,6 +8,10 @@ import org.slf4j.LoggerFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The heartbeat of the library. FluxerClient is the central hub through which
+ * all interactions with the platform are coordinated.
+ */
 public class FluxerClient {
     private static final Logger logger = LoggerFactory.getLogger(FluxerClient.class);
     

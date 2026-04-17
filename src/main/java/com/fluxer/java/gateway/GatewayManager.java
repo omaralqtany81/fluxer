@@ -15,6 +15,10 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * The GatewayManager is responsible for the low-level heavy lifting. 
+ * It manages the WebSocket connection, heartbeats, and keeps the client in sync with Fluxer.
+ */
 public class GatewayManager extends WebSocketListener {
     private static final Logger logger = LoggerFactory.getLogger(GatewayManager.class);
     private static final String GATEWAY_URL = "wss://gateway.fluxer.app";
@@ -58,7 +62,7 @@ public class GatewayManager extends WebSocketListener {
         switch (op) {
             case 0: // Dispatch
                 if ("MESSAGE_CREATE".equals(event)) {
-                    Message msg = EntityParser.parseMessage(data);
+                    Message msg = EntityParser.parseMessage(data, client);
                     for (Object listener : client.getListeners()) {
                         if (listener instanceof EventListener) {
                             ((EventListener) listener).onMessageReceived(msg);
@@ -111,13 +115,26 @@ public class GatewayManager extends WebSocketListener {
 
     @Override
     public void onFailure(@NotNull WebSocket webSocket, @NotNull Throwable t, Response response) {
-        logger.error("Gateway connection failure: ", t);
+        logger.error("Gateway connection failure: {}. Attempting to heal...", t.getMessage());
         this.connected = false;
+        reconnect();
     }
 
     @Override
     public void onClosing(@NotNull WebSocket webSocket, int code, @NotNull String reason) {
         logger.warn("Gateway connection closing: {} ({})", reason, code);
         this.connected = false;
+        if (code != 1000) { // If not a normal closure, let's try to get back online
+            reconnect();
+        }
+    }
+
+    /**
+     * Intelligent reconnection logic. 
+     * We don't want to spam the server, so we use a simple delay before trying again.
+     */
+    private void reconnect() {
+        logger.info("Scheduling reconnection in 5 seconds...");
+        scheduler.schedule(this::connect, 5, TimeUnit.SECONDS);
     }
 }

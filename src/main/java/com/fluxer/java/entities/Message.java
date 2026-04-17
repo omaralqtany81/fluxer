@@ -3,13 +3,13 @@ package com.fluxer.java.entities;
 public class Message {
     private final String id;
     private final String content;
-    private final String channelId;
+    private final TextChannel channel;
     private final User author;
 
-    public Message(String id, String content, String channelId, User author) {
+    public Message(String id, String content, TextChannel channel, User author) {
         this.id = id;
         this.content = content;
-        this.channelId = channelId;
+        this.channel = channel;
         this.author = author;
     }
 
@@ -21,12 +21,19 @@ public class Message {
         return content;
     }
 
-    public String getChannelId() {
-        return channelId;
+    public TextChannel getChannel() {
+        return channel;
     }
 
     public User getAuthor() {
         return author;
+    }
+
+    /**
+     * Quickly replies to this message.
+     */
+    public void reply(String text) {
+        channel.sendMessage(text);
     }
 
     @Override
