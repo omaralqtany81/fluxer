@@ -1,7 +1,8 @@
 target/
 *.class
+*.log
 .idea/
 *.iml
 .DS_Store
-*.log
-.env
+latest_rank.png
+fluxer_data.json

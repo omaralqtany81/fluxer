@@ -20,8 +20,8 @@
     <dependencies>
         <dependency>
             <groupId>com.github.omaralqtany81.fluxer.java</groupId>
-            <artifactId>fluxer-java</artifactId>
-            <version>120b60d0d8</version>
+            <artifactId>fluxercore</artifactId>
+            <version>v1.0.1</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
