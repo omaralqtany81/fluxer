@@ -39,9 +39,9 @@ public class TextChannel {
     /**
      * Sends an embed to this channel.
      */
-    public void sendMessage(EmbedBuilder embed) {
+    public void sendMessage(com.fluxer.java.utils.EmbedBuilder embed) {
         ObjectNode data = mapper.createObjectNode();
-        data.set("embed", mapper.valueToTree(embed));
+        data.set("embeds", mapper.createArrayNode().add(mapper.valueToTree(embed)));
         client.getRestManager().post("/channels/" + id + "/messages", data.toString());
     }
 

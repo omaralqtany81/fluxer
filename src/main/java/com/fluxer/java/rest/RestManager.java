@@ -38,6 +38,11 @@ public class RestManager {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                if (!response.isSuccessful()) {
+                    logger.error("REST Request failed with code {}: {}", response.code(), response.body().string());
+                } else {
+                    logger.debug("REST Request successful: {}", response.code());
+                }
                 future.complete(response);
             }
         });
