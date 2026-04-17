@@ -80,7 +80,7 @@ public class GatewayManager extends WebSocketListener {
             String identifyPayload = objectMapper.createObjectNode()
                     .put("op", 2)
                     .set("d", objectMapper.createObjectNode()
-                            .put("token", client.getToken())
+                            .put("token", "Bot " + client.getToken())
                             .put("intents", 32767)
                             .set("properties", objectMapper.createObjectNode()
                                     .put("os", System.getProperty("os.name"))
