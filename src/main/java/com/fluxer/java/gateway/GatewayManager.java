@@ -15,10 +15,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * The GatewayManager is responsible for the low-level heavy lifting. 
- * It manages the WebSocket connection, heartbeats, and keeps the client in sync with Fluxer.
- */
 public class GatewayManager extends WebSocketListener {
     private static final Logger logger = LoggerFactory.getLogger(GatewayManager.class);
     private static final String GATEWAY_URL = "wss://gateway.fluxer.app";
@@ -134,10 +130,6 @@ public class GatewayManager extends WebSocketListener {
         }
     }
 
-    /**
-     * Intelligent reconnection logic. 
-     * We don't want to spam the server, so we use a simple delay before trying again.
-     */
     private void reconnect() {
         logger.info("Scheduling reconnection in 5 seconds...");
         scheduler.schedule(this::connect, 5, TimeUnit.SECONDS);

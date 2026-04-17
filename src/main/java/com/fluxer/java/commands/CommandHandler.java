@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 
-/**
- * The brain behind your bot's personality. 
- * CommandHandler allows for dynamic registration of actions.
- */
 public class CommandHandler {
     private final Map<String, Consumer<CommandContext>> commands = new HashMap<>();
     private final String prefix;
@@ -17,16 +13,10 @@ public class CommandHandler {
         this.prefix = prefix;
     }
 
-    /**
-     * Registers a new command name and its associated action.
-     */
     public void register(String name, Consumer<CommandContext> action) {
         commands.put(name.toLowerCase(), action);
     }
 
-    /**
-     * Internal: Handles the routing of incoming messages to registered commands.
-     */
     public void handle(Message message) {
         String content = message.getContent();
         if (!content.startsWith(prefix)) return;

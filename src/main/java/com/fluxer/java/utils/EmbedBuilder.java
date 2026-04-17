@@ -4,9 +4,6 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A fluent builder for creating rich embeds in Fluxer.
- */
 public class EmbedBuilder {
     private String title;
     private String description;
@@ -64,7 +61,6 @@ public class EmbedBuilder {
         return this;
     }
 
-    // internal class for fields
     public static class Field {
         public String name;
         public String value;
@@ -77,10 +73,8 @@ public class EmbedBuilder {
         }
     }
 
-    // Getters for JSON parsing
     public String getTitle() { return title; }
     public String getDescription() { return description; }
     public Integer getColor() { return color; }
     public List<Field> getFields() { return fields; }
-    // ... other getters
 }
