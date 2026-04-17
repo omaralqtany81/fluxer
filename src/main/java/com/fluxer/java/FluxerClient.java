@@ -6,6 +6,8 @@ import com.fluxer.java.commands.CommandHandler;
 import com.fluxer.java.leveling.LevelingManager;
 import com.fluxer.java.events.EventListener;
 import com.fluxer.java.utils.EntityParser;
+import com.fluxer.java.interactivity.InteractivityManager;
+import com.fluxer.java.broadcast.Broadcaster;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +27,8 @@ public class FluxerClient {
     private final RestManager restManager;
     private final CommandHandler commandHandler;
     private final LevelingManager levelingManager;
+    private final InteractivityManager interactivityManager;
+    private final Broadcaster broadcaster;
     private final List<Object> listeners;
 
     FluxerClient(String token, List<Object> listeners, String prefix) {
@@ -34,6 +38,8 @@ public class FluxerClient {
         this.gatewayManager = new GatewayManager(this);
         this.commandHandler = new CommandHandler(prefix != null ? prefix : "!");
         this.levelingManager = new LevelingManager();
+        this.interactivityManager = new InteractivityManager();
+        this.broadcaster = new Broadcaster(this);
     }
 
     public void login() {
@@ -60,4 +66,12 @@ public class FluxerClient {
     public LevelingManager getLevelingManager() {
         return levelingManager;
     }
+    public InteractivityManager getInteractivityManager() {
+        return interactivityManager;
+    }
+
+    public Broadcaster getBroadcaster() {
+        return broadcaster;
+    }
 }
+

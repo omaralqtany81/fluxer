@@ -48,4 +48,44 @@ public class Guild {
 
     public String getId() { return id; }
     public String getName() { return name; }
+
+    // ==========================================
+    // 🛡️ Moderation Toolkit (God-Tier Control)
+    // ==========================================
+
+    /**
+     * Kicks a user from the guild.
+     */
+    public void kickMember(String userId, String reason) {
+        ObjectNode data = mapper.createObjectNode().put("reason", reason);
+        client.getRestManager().post("/guilds/" + id + "/members/" + userId + "/kick", data.toString());
+    }
+
+    /**
+     * Bans a user from the guild, optionally specifying a duration and reason.
+     */
+    public void banMember(String userId, String reason, int daysToEraseMessages) {
+        ObjectNode data = mapper.createObjectNode()
+                .put("reason", reason)
+                .put("delete_message_days", daysToEraseMessages);
+        client.getRestManager().post("/guilds/" + id + "/bans/" + userId, data.toString());
+    }
+
+    /**
+     * Timeouts (mutes) a user for a specific duration in seconds.
+     */
+    public void timeoutMember(String userId, long durationSeconds, String reason) {
+        ObjectNode data = mapper.createObjectNode()
+                .put("duration", durationSeconds)
+                .put("reason", reason);
+        client.getRestManager().post("/guilds/" + id + "/members/" + userId + "/timeout", data.toString());
+    }
+
+    /**
+     * Issues a warning by assigning a specific "Warn" role to the user.
+     */
+    public void warnMember(String userId, String warnRoleId, String reason) {
+        ObjectNode data = mapper.createObjectNode().put("reason", reason);
+        client.getRestManager().post("/guilds/" + id + "/members/" + userId + "/roles/" + warnRoleId, data.toString());
+    }
 }

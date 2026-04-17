@@ -54,4 +54,13 @@ public class TextChannel {
         data.set("components", mapper.valueToTree(rows));
         client.getRestManager().post("/channels/" + id + "/messages", data.toString());
     }
+
+    /**
+     * Clears (bulk deletes) a specific number of messages in the channel.
+     * Often used by moderation bots for cleaning up spam.
+     */
+    public void clearMessages(int amount) {
+        ObjectNode data = mapper.createObjectNode().put("amount", amount);
+        client.getRestManager().post("/channels/" + id + "/messages/bulk-delete", data.toString());
+    }
 }
