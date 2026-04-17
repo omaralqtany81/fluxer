@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 public class GatewayManager extends WebSocketListener {
     private static final Logger logger = LoggerFactory.getLogger(GatewayManager.class);
-    private static final String GATEWAY_URL = "wss://gateway.fluxer.app";
+    private static final String GATEWAY_URL = "wss://gateway.fluxer.app/?v=10";
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     private final FluxerClient client;
