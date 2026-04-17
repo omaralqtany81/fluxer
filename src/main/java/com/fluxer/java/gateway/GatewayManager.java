@@ -63,19 +63,10 @@ public class GatewayManager extends WebSocketListener {
                     // Trigger the dynamic framework features
                     client.getCommandHandler().handle(msg);
                     client.getLevelingManager().processMessage(msg);
-
-                    for (Object listener : client.getListeners()) {
-                        if (listener instanceof EventListener) {
-                            ((EventListener) listener).onMessageReceived(msg);
-                        }
-                    }
+                    client.getEventBus().post(msg, client.getListeners());
                 } else if ("READY".equals(event)) {
                     logger.info("Bot is ready!");
-                    for (Object listener : client.getListeners()) {
-                        if (listener instanceof EventListener) {
-                            ((EventListener) listener).onReady();
-                        }
-                    }
+                    client.getEventBus().post(new com.fluxer.java.events.ReadyEvent(), client.getListeners());
                 }
                 break;
             case 10: // Hello

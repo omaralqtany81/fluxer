@@ -8,6 +8,9 @@ import com.fluxer.java.events.EventListener;
 import com.fluxer.java.utils.EntityParser;
 import com.fluxer.java.interactivity.InteractivityManager;
 import com.fluxer.java.broadcast.Broadcaster;
+import com.fluxer.java.graphics.RankCardGenerator;
+import com.fluxer.java.database.DatabaseManager;
+import com.fluxer.java.events.EventBus;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +28,9 @@ public class FluxerClient {
     private final LevelingManager levelingManager;
     private final InteractivityManager interactivityManager;
     private final Broadcaster broadcaster;
+    private final EventBus eventBus;
+    private final RankCardGenerator graphicEngine;
+    private final DatabaseManager database;
     private final List<Object> listeners;
 
     FluxerClient(String token, List<Object> listeners, String prefix) {
@@ -36,6 +42,9 @@ public class FluxerClient {
         this.levelingManager = new LevelingManager();
         this.interactivityManager = new InteractivityManager();
         this.broadcaster = new Broadcaster(this);
+        this.eventBus = new EventBus();
+        this.graphicEngine = new RankCardGenerator();
+        this.database = new DatabaseManager("fluxer_data.json");
     }
 
     public void login() {
@@ -68,6 +77,18 @@ public class FluxerClient {
 
     public Broadcaster getBroadcaster() {
         return broadcaster;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
+    }
+
+    public RankCardGenerator getGraphicEngine() {
+        return graphicEngine;
+    }
+
+    public DatabaseManager getDatabase() {
+        return database;
     }
 }
 
