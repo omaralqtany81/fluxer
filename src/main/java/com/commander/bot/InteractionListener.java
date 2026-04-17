@@ -30,6 +30,20 @@ public class InteractionListener {
 
                 slash.reply("🛡️ Config Synchronized: Set **" + key + "** to **" + value + "**.");
             }
+
+            // HELP COMMAND
+            if (command.equals("help")) {
+                com.fluxer.java.utils.EmbedBuilder embed = new com.fluxer.java.utils.EmbedBuilder()
+                        .setTitle("🔱 Commander Bot - Command Menu")
+                        .setDescription("Welcome, Commander. Here are your available operational directives:")
+                        .setColor(java.awt.Color.CYAN)
+                        .addField("🛡️ /status", "Checks system integrity.", true)
+                        .addField("⚙️ /set <key> <value>", "Updates configuration metadata.", true)
+                        .addField("❓ /help", "Displays this interface.", true)
+                        .setFooter("Fluxer Bot Engine v1.0.1", null);
+                
+                slash.reply(embed);
+            }
         }
     }
 }

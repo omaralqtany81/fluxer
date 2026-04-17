@@ -39,6 +39,19 @@ public class CommanderMain {
             ctx.getMessage().reply("🛡️ Config Synchronized (Text): **" + key + "** = **" + value + "**.");
         });
 
+        client.getCommandHandler().register("help", ctx -> {
+            com.fluxer.java.utils.EmbedBuilder embed = new com.fluxer.java.utils.EmbedBuilder()
+                    .setTitle("🔱 Commander Bot - Command Menu")
+                    .setDescription("Welcome, Commander. Here are your available operational directives (Text Mode):")
+                    .setColor(java.awt.Color.CYAN)
+                    .addField("🛡️ !status", "Checks system integrity.", true)
+                    .addField("⚙️ !set <key> <value>", "Updates configuration metadata.", true)
+                    .addField("❓ !help", "Displays this interface.", true)
+                    .setFooter("Fluxer Bot Engine v1.0.1", null);
+
+            ctx.getMessage().getChannel().sendMessage(embed);
+        });
+
         client.login();
         logger.info("🔥 Commander Bot Online & Listening for ! commands");
     }
