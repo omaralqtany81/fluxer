@@ -100,11 +100,22 @@ public class GatewayManager extends WebSocketListener {
         }
     }
 
+    private java.util.concurrent.ScheduledFuture<?> heartbeatTask;
+
     private void startHeartbeat(long interval) {
-        scheduler.scheduleAtFixedRate(() -> {
-            if (connected) {
-                logger.debug("Sending heartbeat...");
-                webSocket.send("{\"op\": 1}");
+        if (heartbeatTask != null && !heartbeatTask.isCancelled()) {
+            heartbeatTask.cancel(false);
+        }
+        
+        logger.info("Starting heartbeat task with interval: {}ms", interval);
+        heartbeatTask = scheduler.scheduleAtFixedRate(() -> {
+            try {
+                if (connected && webSocket != null) {
+                    logger.debug("Sending heartbeat...");
+                    webSocket.send("{\"op\": 1}");
+                }
+            } catch (Exception e) {
+                logger.error("Error sending heartbeat: ", e);
             }
         }, interval, interval, TimeUnit.MILLISECONDS);
     }
