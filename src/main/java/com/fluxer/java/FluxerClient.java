@@ -11,6 +11,9 @@ import com.fluxer.java.broadcast.Broadcaster;
 import com.fluxer.java.graphics.RankCardGenerator;
 import com.fluxer.java.database.DatabaseManager;
 import com.fluxer.java.events.EventBus;
+import com.fluxer.java.plugins.PluginManager;
+import com.fluxer.java.translate.TranslationManager;
+import com.fluxer.java.automod.AutoModManager;
 import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,9 @@ public class FluxerClient {
     private final EventBus eventBus;
     private final RankCardGenerator graphicEngine;
     private final DatabaseManager database;
+    private final PluginManager pluginManager;
+    private final TranslationManager translationManager;
+    private final AutoModManager autoMod;
     private final List<Object> listeners;
 
     FluxerClient(String token, List<Object> listeners, String prefix) {
@@ -45,6 +51,9 @@ public class FluxerClient {
         this.eventBus = new EventBus();
         this.graphicEngine = new RankCardGenerator();
         this.database = new DatabaseManager("fluxer_data.json");
+        this.pluginManager = new PluginManager(this);
+        this.translationManager = new TranslationManager();
+        this.autoMod = new AutoModManager();
     }
 
     public void login() {
@@ -89,6 +98,18 @@ public class FluxerClient {
 
     public DatabaseManager getDatabase() {
         return database;
+    }
+
+    public PluginManager getPluginManager() {
+        return pluginManager;
+    }
+
+    public TranslationManager getTranslationManager() {
+        return translationManager;
+    }
+
+    public AutoModManager getAutoMod() {
+        return autoMod;
     }
 }
 
