@@ -20,6 +20,14 @@ public class DatabaseManager {
         sync();
     }
 
+    public void set(String key, Object value) {
+        data.put(key, value);
+    }
+
+    public synchronized void save() {
+        sync();
+    }
+
     public Object get(String key) {
         return data.get(key);
     }
