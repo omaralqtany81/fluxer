@@ -30,4 +30,5 @@ public abstract class Interaction {
 
     public String getId() { return id; }
     public InteractionType getType() { return type; }
+    public FluxerClient getClient() { return client; }
 }

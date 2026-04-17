@@ -22,4 +22,8 @@ public class AutoModManager {
     public void enableAI(boolean enabled) {
         this.aiEnabled = enabled;
     }
+
+    public void setEnabled(boolean enabled) {
+        this.aiEnabled = enabled;
+    }
 }
