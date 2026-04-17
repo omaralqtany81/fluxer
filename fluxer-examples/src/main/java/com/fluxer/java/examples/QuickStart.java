@@ -7,7 +7,13 @@ import com.fluxer.java.events.Subscribe;
 
 public class QuickStart {
     public static void main(String[] args) {
-        FluxerClient client = new FluxerBuilder("YOUR_TOKEN_HERE")
+        String token = System.getenv("TOKEN");
+        if (token == null || token.isEmpty()) {
+            token = "YOUR_TOKEN_HERE"; // Fallback for local development
+            System.out.println("Warning: TOKEN environment variable not set. Using fallback token.");
+        }
+
+        FluxerClient client = new FluxerBuilder(token)
                 .setPrefix("!")
                 .build();
 
