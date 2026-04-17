@@ -56,14 +56,16 @@ public class GatewayManager extends WebSocketListener {
         switch (op) {
             case 0:
                 if ("MESSAGE_CREATE".equals(event)) {
+                    logger.info("Gateway: MESSAGE_CREATE received from {}", data.get("author").get("username").asText());
                     Message msg = EntityParser.parseMessage(data, client);
                     client.getCommandHandler().handle(msg);
                     client.getLevelingManager().processMessage(msg);
                     client.getEventBus().post(msg, client.getListeners());
                 } else if ("READY".equals(event)) {
-                    logger.info("Bot is ready!");
+                    logger.info("Gateway: READY event received. Authenticated as: {}", data.get("user").get("username").asText());
                     client.getEventBus().post(new com.fluxer.java.events.ReadyEvent(), client.getListeners());
                 } else if ("INTERACTION_CREATE".equals(event)) {
+                    logger.info("Gateway: INTERACTION_CREATE received.");
                     com.fluxer.java.entities.interactions.Interaction interaction = EntityParser.parseInteraction(data, client);
                     if (interaction != null) {
                         client.getEventBus().post(interaction, client.getListeners());
