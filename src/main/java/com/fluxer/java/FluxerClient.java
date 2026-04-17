@@ -2,6 +2,11 @@ package com.fluxer.java;
 
 import com.fluxer.java.gateway.GatewayManager;
 import com.fluxer.java.rest.RestManager;
+import com.fluxer.java.commands.CommandHandler;
+import com.fluxer.java.leveling.LevelingManager;
+import com.fluxer.java.events.EventListener;
+import com.fluxer.java.utils.EntityParser;
+import okhttp3.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
