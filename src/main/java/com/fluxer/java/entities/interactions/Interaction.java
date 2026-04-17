@@ -25,7 +25,21 @@ public abstract class Interaction {
     }
 
     public void reply(String content) {
-        // Implementation for interaction callback
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        com.fasterxml.jackson.databind.node.ObjectNode body = mapper.createObjectNode();
+        body.put("type", 4);
+        body.set("data", mapper.createObjectNode().put("content", content));
+        client.getRestManager().post("/interactions/" + id + "/" + token + "/callback", body.toString());
+    }
+
+    public void reply(com.fluxer.java.utils.EmbedBuilder embed) {
+        com.fasterxml.jackson.databind.ObjectMapper mapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        com.fasterxml.jackson.databind.node.ObjectNode body = mapper.createObjectNode();
+        body.put("type", 4);
+        com.fasterxml.jackson.databind.node.ObjectNode data = mapper.createObjectNode();
+        data.set("embeds", mapper.createArrayNode().add(mapper.valueToTree(embed)));
+        body.set("data", data);
+        client.getRestManager().post("/interactions/" + id + "/" + token + "/callback", body.toString());
     }
 
     public String getId() { return id; }
