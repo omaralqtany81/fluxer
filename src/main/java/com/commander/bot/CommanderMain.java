@@ -15,15 +15,32 @@ public class CommanderMain {
         if (token == null) token = "YOUR_TOKEN_HERE";
 
         FluxerClient client = new FluxerBuilder(token)
-                .setPrefix(".")
+                .setPrefix("!")
                 .build();
 
         client.getAutoMod().setEnabled(true);
         client.registerListener(new CommanderMain());
         client.registerListener(new InteractionListener());
         
+        // Register Text Commands
+        client.getCommandHandler().register("status", ctx -> {
+            ctx.getMessage().reply("Commander Bot: Integrity 100% 🛡️ (Text Mode)");
+        });
+
+        client.getCommandHandler().register("set", ctx -> {
+            if (ctx.getArgs().length < 2) {
+                ctx.getMessage().reply("❌ Usage: !set <key> <value>");
+                return;
+            }
+            String key = ctx.getArgs()[0];
+            String value = ctx.getArgs()[1];
+            client.getDatabase().set("config:" + key, value);
+            client.getDatabase().save();
+            ctx.getMessage().reply("🛡️ Config Synchronized (Text): **" + key + "** = **" + value + "**.");
+        });
+
         client.login();
-        logger.info("🔥 Commander Bot Online!");
+        logger.info("🔥 Commander Bot Online & Listening for ! commands");
     }
 
     @Subscribe
